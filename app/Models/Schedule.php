@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Schedule extends Model
 {
@@ -13,4 +14,9 @@ class Schedule extends Model
         'start_time',
         'finish_time'
     ];
+
+    public function sessions(): HasMany
+    {
+        return $this->hasMany(ClassSession::class, 'schedules_id', 'id');
+    }
 }

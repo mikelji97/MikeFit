@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ClassModel extends Model
 {
@@ -14,4 +15,9 @@ class ClassModel extends Model
         'duration',
         'max_capacity'
     ];
+
+    public function sessions(): HasMany
+    {
+        return $this->hasMany(ClassSession::class, 'classes_id', 'id');
+    }
 }
