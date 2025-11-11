@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ClassSession extends Model
 {
@@ -14,4 +15,14 @@ class ClassSession extends Model
         'classroom',
         'current_capacity'
     ];
+
+    public function classModel(): BelongsTo
+    {
+        return $this->belongsTo(ClassModel::class, 'classes_id', 'id');
+    }
+
+    public function schedule(): BelongsTo
+    {
+        return $this->belongsTo(Schedule::class, 'schedules_id', 'id');
+    }
 }
