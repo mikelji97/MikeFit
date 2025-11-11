@@ -6,5 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class ClassModel extends Model
 {
-    //
+    protected $table = 'classes';
+
+    protected $fillable = [
+        'name',
+        'description',
+        'duration',
+        'max_capacity'
+    ];
 }
