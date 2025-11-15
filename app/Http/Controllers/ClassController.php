@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Schedule;
 
 class ClassController extends Controller
 {
@@ -20,7 +21,15 @@ class ClassController extends Controller
      */
     public function create()
     {
-        //
+        // 1. OBTENER DATOS DE APOYO: 
+        // Traemos todos los horarios pre-existentes para que el usuario pueda 
+        // seleccionar a cuál se vinculará esta nueva clase.
+        $schedules = Schedule::all(); 
+
+        // 2. DEVOLVER LA VISTA CORRECTA:
+        // El nombre de la vista debe coincidir con el nombre de tu archivo.
+        // Si tu archivo es /resources/views/classCreate.blade.php
+        return view('classCreate', compact('schedules')); 
     }
 
     /**
