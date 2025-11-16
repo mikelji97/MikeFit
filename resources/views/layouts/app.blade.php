@@ -3,24 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reserva de Clases</title>
+    <title>MikeFit - Reserva de Clases</title>
 
-    {{-- Bootstrap desde CDN --}}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-
-    {{-- Estilos/JS con Vite --}}
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- Tailwind CSS desde CDN --}}
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    {{-- Navbar simple --}}
-    <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
-        <a class="navbar-brand" href="{{ url('/') }}">Inicio</a>
-        <a class="nav-link" href="{{ route('classes.create') }}">Reservar clase</a>
+<body class="bg-[#d6e7e0] min-h-screen">
+    
+    {{-- Navbar con Tailwind --}}
+    <nav class="bg-white shadow-md px-6 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="{{ url('/') }}" class="text-xl font-bold text-gray-800 hover:text-gray-600">
+                    MikeFit
+            </a>
+            <div class="flex gap-4">
+                <a href="{{ route('classes.create') }}" class="px-4 py-2 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600">
+                    + Nueva Clase
+                </a>
+            </div>
+        </div>
     </nav>
 
     {{-- Contenedor principal --}}
-    <main class="container py-4">
-        {{-- Mensajes flash (éxito, error, etc.) --}}
+    <main>
+        {{-- Mensajes flash --}}
         @include('partials.mensajes')
 
         {{-- Contenido de cada vista --}}

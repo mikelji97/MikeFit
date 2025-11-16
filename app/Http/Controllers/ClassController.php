@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Schedule;
+use App\Models\ClassModel;
 
 class ClassController extends Controller
 {
@@ -13,12 +14,10 @@ class ClassController extends Controller
      */
     public function index()
     {
-        //
+        $classes = ClassModel::all();
+        return view('index', compact('classes'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         // 1. OBTENER DATOS DE APOYO: 
@@ -29,15 +28,14 @@ class ClassController extends Controller
         // 2. DEVOLVER LA VISTA CORRECTA:
         // El nombre de la vista debe coincidir con el nombre de tu archivo.
         // Si tu archivo es /resources/views/classCreate.blade.php
-        return view('classCreate', compact('schedules')); 
+        return view('classes.classCreate', compact('schedules')); 
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        //
+    { 
     }
 
     /**
