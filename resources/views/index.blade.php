@@ -21,6 +21,11 @@
                 >
                     Buscar
                 </button>
+                <div class="flex gap-4">
+                <a href="{{ route('classes.create') }}" class="px-4 py-2 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600">
+                    + Nueva Clase
+                </a>
+            </div>
             </form>
         </header>
 

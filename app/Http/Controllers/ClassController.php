@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Schedule;
 use App\Models\ClassModel;
 
 class ClassController extends Controller
@@ -20,22 +19,29 @@ class ClassController extends Controller
 
     public function create()
     {
-        // 1. OBTENER DATOS DE APOYO: 
-        // Traemos todos los horarios pre-existentes para que el usuario pueda 
-        // seleccionar a cuál se vinculará esta nueva clase.
-        $schedules = Schedule::all(); 
-
-        // 2. DEVOLVER LA VISTA CORRECTA:
-        // El nombre de la vista debe coincidir con el nombre de tu archivo.
-        // Si tu archivo es /resources/views/classCreate.blade.php
-        return view('classes.classCreate', compact('schedules')); 
+        return view('classes.classCreate');
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    { 
+    {
+        $validated = $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'required',
+            'duration' => 'required|integer|min:1',
+            'max_capacity' => 'required|integer|min:1'
+        ]);
+
+        // valido imagen aqui porque es opcional y asi no hago migracion
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store('classes', 'public');
+        }
+
+        ClassModel::create($validated);
+
+        return redirect()->route('classes.index')->with('success', 'Clase creada');
     }
 
     /**
