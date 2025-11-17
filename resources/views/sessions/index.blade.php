@@ -17,30 +17,34 @@
                 </span>
                 <a href="{{ route('classes.index') }}"
                     class="ml-auto bg-white text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-50 font-semibold">
-                    <-- Volver </a>
+                    ← Volver
+                </a>
             </div>
         </div>
 
         {{-- Lista de sesiones mejorada --}}
         @if (isset($sessions) && count($sessions) > 0)
+            @php
+                $dias = ['', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+            @endphp
+            
             <div class="grid gap-4">
                 @foreach ($sessions as $session)
                     <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 border-l-4 border-blue-500">
                         @if ($session->schedule)
                             <p class="mb-2">
-                                <span class="text-gray-500"> Horario:</span>
-                                <span class="font-semibold">{{ $session->schedule->day_of_week }}</span> -
+                                <span class="text-gray-500">Horario:</span>
+                                <span class="font-semibold">{{ $dias[$session->schedule->day_of_week] ?? $session->schedule->day_of_week }}</span> -
                                 {{ $session->schedule->start_time }} a {{ $session->schedule->end_time }}
                             </p>
                         @endif
                         <p class="mb-2">
-                            <span class="text-gray-500"> Sala:</span>
+                            <span class="text-gray-500">Sala:</span>
                             <span class="font-semibold">{{ $session->classroom }}</span>
                         </p>
                         <p class="mb-2">
-                            <span class="text-gray-500"> Capacidad:</span>
-                            <span class="font-semibold">{{ $session->current_capacity }} /
-                                {{ $class->max_capacity }}</span>
+                            <span class="text-gray-500">Capacidad:</span>
+                            <span class="font-semibold">{{ $session->current_capacity }} / {{ $class->max_capacity }}</span>
                         </p>
                         <p class="text-sm text-gray-400">
                             Creada: {{ $session->created_at->format('d/m/Y H:i') }}
@@ -51,7 +55,7 @@
         @else
             {{-- Mensaje cuando no hay sesiones --}}
             <div class="bg-white rounded-xl shadow-md p-12 text-center">
-                <div class="text-5xl mb-4"></div>
+                <div class="text-5xl mb-4">📅</div>
                 <h3 class="text-xl font-semibold text-gray-800 mb-2">No hay sesiones programadas para esta clase</h3>
                 <p class="text-gray-500">Las sesiones se mostrarán aquí cuando estén disponibles</p>
             </div>
