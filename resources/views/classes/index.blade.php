@@ -60,13 +60,6 @@
                                         Aforo {{ $class->max_capacity }}
                                     </span>
                                 @endif
-
-                                @if (isset($class->capacity))
-                                    <span class="bg-gray-100 rounded-full px-2.5 py-1.5">
-                                        Aforo {{ $class->capacity }}
-                                    </span>
-                                @endif
-
                                 @if (isset($class->price))
                                     <span class="bg-gray-100 rounded-full px-2.5 py-1.5">
                                         {{ number_format($class->price, 2) }} &euro;
@@ -85,10 +78,14 @@
                                 class="inline-block text-center rounded-[8px] px-2 py-1.5 font-semibold bg-green-500 text-[#0f172a] hover:bg-[#e2e8f0] no-underline">
                                 Editar
                             </a>
-                            <a href="{{ route('classes.update', $class->id) }}"
-                                class="inline-block text-center rounded-[8px] px-2 py-1.5 font-semibold bg-red-500 text-white hover:bg-red-600 no-underline">
-                                Eliminar
-                            </a>
+                            <form action="{{ route('classes.destroy', $class->id) }}" method="POST" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button
+                                    class="inline-block text-center rounded-[8px] px-2 py-1.5 font-semibold bg-red-500 text-white hover:bg-red-600 no-underline">
+                                    Eliminar
+                                </button>
+                            </form>
                         </div>
                     </article>
                 @endforeach

@@ -31,7 +31,7 @@
 
             {{-- Descripción --}}
             <div class="mb-6">
-                <label for="description" class="block text-gray-700 font-semibold mb-2">
+                <label for="description" class="block text-gray-700 font-semibold mb-2 line-clamp-2">
                     Descripción:
                 </label>
                 <textarea 

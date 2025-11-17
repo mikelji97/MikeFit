@@ -29,9 +29,11 @@
                 </label>
                 <textarea id="description" name="description" rows="4" placeholder="Describe la clase..."
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 resize-none"
+                    maxlength="250"
                     required>{{ old('description') }}</textarea>
+                    
                 @error('description')
-                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    <p class="text-red-500 text-sm mt-1 ">{{ $message }}</p>
                 @enderror
             </div>
 

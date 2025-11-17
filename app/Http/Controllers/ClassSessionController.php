@@ -4,20 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\ClassSession;
+use App\Models\ClassModel;
 
 class ClassSessionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $classId = $request->get('class_id');
+        $class = ClassModel::findOrFail($classId);
+        $sessions = ClassSession::where('classes_id', $classId)->with('schedule')->get();
+        
+        return view('sessions.index', compact('class', 'sessions'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //
