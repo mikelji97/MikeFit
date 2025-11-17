@@ -5,15 +5,23 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ClassModel;
+use Illuminate\Support\Facades\Storage;
 
 class ClassController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    
+    public function index(Request $request)
     {
-        $classes = ClassModel::all();
+        $query = ClassModel::query();
+
+        if ($request->filled('q')) {
+            $search = $request->q;
+
+            $query->where('name', 'LIKE', "%{$search}%");
+        }
+
+        $classes = $query->get();
+
         return view('classes.index', compact('classes'));
     }
 
@@ -22,19 +30,15 @@ class ClassController extends Controller
         return view('classes.classCreate');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|max:255',
-            'description' => 'required',
+            'name' => 'required|max:255|unique:classes,name',
+            'description' => 'required|max:250',
             'duration' => 'required|integer|min:1',
             'max_capacity' => 'required|integer|min:1'
         ]);
 
-        // valido imagen aqui porque es opcional y asi no hago migracion
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('classes', 'public');
         }
@@ -44,50 +48,44 @@ class ClassController extends Controller
         return redirect()->route('classes.index')->with('success', 'Clase creada');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(string $class) 
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    
+    public function edit(string $class)  
     {
-
-    $class = ClassModel::findOrFail($id);
-    
-    return view('classes.classEdit', compact('class'));
-    
+        $class = ClassModel::findOrFail($class);
+        return view('classes.classEdit', compact('class'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $class)  // ← Cambiado de $id a $class
     {
-        $class = ClassModel::findOrFail($id);
+        $class = ClassModel::findOrFail($class);
 
-    $validated = $request->validate([
-        'name' => 'required|max:255',
-        'description' => 'required',
-        'duration' => 'required|integer|min:1',
-        'max_capacity' => 'required|integer|min:1'
-    ]);
+        $validated = $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'required',
+            'duration' => 'required|integer|min:1',
+            'max_capacity' => 'required|integer|min:1'
+        ]);
 
-    $class->update($validated);
+        $class->update($validated);
 
-    return redirect()->route('classes.index')->with('success', 'Clase actualizada');
+        return redirect()->route('classes.index')->with('success', 'Clase actualizada');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    
+    public function destroy(string $class) 
     {
-        //
+        $class = ClassModel::findOrFail($class);
+
+        if ($class->image) {
+            Storage::disk('public')->delete($class->image);
+        }
+        
+        $class->delete();
+        return redirect()->route('classes.index')->with('success', 'Clase eliminada');
     }
 }
