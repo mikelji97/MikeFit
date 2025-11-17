@@ -13,7 +13,8 @@ class ClassModel extends Model
         'name',
         'description',
         'duration',
-        'max_capacity'
+        'max_capacity',
+        'image'
     ];
 
     public function sessions(): HasMany
