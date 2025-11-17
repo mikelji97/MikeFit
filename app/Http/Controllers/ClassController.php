@@ -14,7 +14,7 @@ class ClassController extends Controller
     public function index()
     {
         $classes = ClassModel::all();
-        return view('index', compact('classes'));
+        return view('classes.index', compact('classes'));
     }
 
     public function create()
@@ -57,7 +57,11 @@ class ClassController extends Controller
      */
     public function edit(string $id)
     {
-        //
+
+    $class = ClassModel::findOrFail($id);
+    
+    return view('classes.classEdit', compact('class'));
+    
     }
 
     /**
@@ -65,7 +69,18 @@ class ClassController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $class = ClassModel::findOrFail($id);
+
+    $validated = $request->validate([
+        'name' => 'required|max:255',
+        'description' => 'required',
+        'duration' => 'required|integer|min:1',
+        'max_capacity' => 'required|integer|min:1'
+    ]);
+
+    $class->update($validated);
+
+    return redirect()->route('classes.index')->with('success', 'Clase actualizada');
     }
 
     /**
