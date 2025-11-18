@@ -55,7 +55,6 @@
         @else
             {{-- Mensaje cuando no hay sesiones --}}
             <div class="bg-white rounded-xl shadow-md p-12 text-center">
-                <div class="text-5xl mb-4">📅</div>
                 <h3 class="text-xl font-semibold text-gray-800 mb-2">No hay sesiones programadas para esta clase</h3>
                 <p class="text-gray-500">Las sesiones se mostrarán aquí cuando estén disponibles</p>
             </div>

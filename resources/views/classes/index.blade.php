@@ -90,7 +90,6 @@
         @else
             {{-- Mensaje vacío --}}
             <div class="bg-white rounded-xl shadow-md p-16 text-center">
-                <div class="text-6xl mb-4"></div>
                 <h3 class="text-2xl font-bold text-gray-800 mb-2">No hay clases disponibles</h3>
                 <p class="text-gray-500 mb-6">Comienza creando tu primera clase</p>
                 <a href="{{ route('classes.create') }}"
