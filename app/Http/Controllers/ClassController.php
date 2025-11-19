@@ -54,15 +54,15 @@ class ClassController extends Controller
     }
 
     
-    public function edit(string $class)  
+    public function edit(string $id)  
     {
-        $class = ClassModel::findOrFail($class);
+        $class = ClassModel::findOrFail($id);
         return view('classes.classEdit', compact('class'));
     }
 
-    public function update(Request $request, string $class)  // ← Cambiado de $id a $class
+    public function update(Request $request, string $id)  
     {
-        $class = ClassModel::findOrFail($class);
+        $class = ClassModel::findOrFail($id);
 
         $validated = $request->validate([
             'name' => 'required|max:255',
@@ -77,9 +77,9 @@ class ClassController extends Controller
     }
 
     
-    public function destroy(string $class) 
+    public function destroy(string $id) 
     {
-        $class = ClassModel::findOrFail($class);
+        $class = ClassModel::findOrFail($id);
 
         if ($class->image) {
             Storage::disk('public')->delete($class->image);

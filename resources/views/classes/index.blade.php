@@ -1,99 +1,101 @@
 @extends('layouts.app')
 
 @section('contenido')
-    <div class="max-w-[1100px] mx-auto px-6 py-6">
+    <div class="max-w-[1200px] mx-auto px-6 py-8">
 
-        {{-- Header --}}
-        <header class="flex items-center justify-between mb-6 flex-wrap gap-4">
-            <div class="text-[28px] font-semibold tracking-wide">MikeFit</div>
+        {{-- Header mejorado --}}
+        <header class="bg-white rounded-xl shadow-md p-6 mb-8">
+            <div class="flex items-center justify-between flex-wrap gap-4">
+                <h1 class="text-3xl font-bold text-gray-800">MikeFit</h1>
 
-            <form class="flex gap-2 flex-wrap" method="GET" action="{{ url()->current() }}">
-                <input type="text" name="q" value="{{ request('q') }}"
-                    placeholder="Buscar clase (yoga, spinning, etc.)"
-                    class="px-3 py-2.5 border border-gray-300 rounded-[10px] min-w-[240px]" />
-                <button type="submit"
-                    class="px-3 py-2.5 bg-[#eef2f7] text-[#0f172a] rounded-[10px] font-semibold hover:bg-[#e2e8f0]">
-                    Buscar
-                </button>
-                <div class="flex gap-4">
+                <div class="flex gap-3 flex-wrap items-center">
+                    <form class="flex gap-2" method="GET" action="{{ url()->current() }}">
+                        <input type="text" name="q" value="{{ request('q') }}"
+                            placeholder="Buscar clase..."
+                            class="px-4 py-2.5 border border-gray-300 rounded-lg min-w-[240px] focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        <button type="submit"
+                            class="px-5 py-2.5 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition">
+                            Buscar
+                        </button>
+                    </form>
                     <a href="{{ route('classes.create') }}"
-                        class="px-4 py-2 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600">
+                        class="px-5 py-2.5 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600 transition">
                         + Nueva Clase
                     </a>
                 </div>
-            </form>
+            </div>
         </header>
 
         {{-- Grid de clases --}}
         @if (isset($classes) && count($classes))
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach ($classes as $class)
-                    <article
-                        class="bg-white rounded-2xl overflow-hidden shadow-[0_6px_24px_rgba(0,0,0,0.06)] flex flex-col">
+                    <article class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
 
                         {{-- Imagen --}}
                         @if ($class->image)
                             <img src="{{ asset('storage/' . $class->image) }}" alt="Imagen de {{ $class->name }}"
-                                class="block w-full aspect-[4/3] object-cover" />
+                                class="w-full h-48 object-cover" />
                         @else
-                            <div class="block w-full aspect-[4/3] bg-gradient-to-br from-[#667eea] to-[#764ba2]"></div>
+                            <div class="w-full h-48 bg-blue-50"></div>
                         @endif
 
                         {{-- Contenido --}}
-                        <div class="px-4 pt-4 pb-2">
-                            <h2 class="text-lg font-bold mb-1.5">{{ $class->name }}</h2>
+                        <div class="p-5">
+                            <h2 class="text-xl font-bold text-gray-800 mb-2">{{ $class->name }}</h2>
 
-                            <p class="text-gray-600 text-sm leading-[1.45] mb-2.5 min-h-[2.9em]">
+                            <p class="text-gray-600 text-sm mb-4 line-clamp-2">
                                 {{ $class->description ?? 'Clase del gimnasio para todos los niveles.' }}
                             </p>
 
-                            {{-- Meta información --}}
-                            <div class="flex gap-2.5 flex-wrap text-sm text-gray-600 mb-3">
+                            {{-- Badges --}}
+                            <div class="flex gap-2 flex-wrap mb-4">
                                 @if (isset($class->duration))
-                                    <span class="bg-gray-100 rounded-full px-2.5 py-1.5">
-                                        {{ $class->duration }} min
+                                    <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold">
+                                            {{ $class->duration }} min
                                     </span>
                                 @endif
 
                                 @if (isset($class->max_capacity))
-                                    <span class="bg-gray-100 rounded-full px-2.5 py-1.5">
-                                        Aforo {{ $class->max_capacity }}
-                                    </span>
-                                @endif
-                                @if (isset($class->price))
-                                    <span class="bg-gray-100 rounded-full px-2.5 py-1.5">
-                                        {{ number_format($class->price, 2) }} &euro;
+                                    <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-semibold">
+                                            {{ $class->max_capacity }} pers
                                     </span>
                                 @endif
                             </div>
-                        </div>
 
-                        {{-- Botones de acción --}}
-                        <div class="flex gap-2.5 items-center px-4 pb-4">
-                            <a href="{{ route('sessions.index', ['class_id' => $class->id]) }}"
-                                class="inline-block text-center rounded-[10px] px-3 py-2.5 font-semibold bg-[#0ea5e9] text-white hover:bg-[#0284c7] no-underline mr-8">
-                                Ver sesiones
-                            </a>
-                            <a href="{{ route('classes.edit', $class->id) }}"
-                                class="inline-block text-center rounded-[8px] px-2 py-1.5 font-semibold bg-green-500 text-[#0f172a] hover:bg-[#e2e8f0] no-underline">
-                                Editar
-                            </a>
-                            <form action="{{ route('classes.destroy', $class->id) }}" method="POST" class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button
-                                    class="inline-block text-center rounded-[8px] px-2 py-1.5 font-semibold bg-red-500 text-white hover:bg-red-600 no-underline">
-                                    Eliminar
-                                </button>
-                            </form>
+                            {{-- Botones --}}
+                            <div class="flex gap-2 flex-wrap">
+                                <a href="{{ route('sessions.index', ['class_id' => $class->id]) }}"
+                                    class="flex-1 text-center px-4 py-2.5 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition">
+                                    Ver sesiones
+                                </a>
+                                <a href="{{ route('classes.edit', $class->id) }}"
+                                    class="px-4 py-2.5 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600 transition">
+                                    Editar
+                                </a>
+                                <form action="{{ route('classes.destroy', $class->id) }}" method="POST" class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button
+                                        class="px-4 py-2.5 bg-red-500 text-white rounded-lg font-semibold hover:bg-red-600 transition"
+                                        onclick="return confirm('¿Estás seguro de eliminar esta clase?')">
+                                        Eliminar
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </article>
                 @endforeach
             </div>
         @else
             {{-- Mensaje vacío --}}
-            <div class="py-12 text-center text-gray-600 bg-white/70 rounded-2xl">
-                No hay clases disponibles.
+            <div class="bg-white rounded-xl shadow-md p-16 text-center">
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">No hay clases disponibles</h3>
+                <p class="text-gray-500 mb-6">Comienza creando tu primera clase</p>
+                <a href="{{ route('classes.create') }}"
+                    class="inline-block px-6 py-3 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600 transition">
+                    + Nueva Clase
+                </a>
             </div>
         @endif
     </div>
