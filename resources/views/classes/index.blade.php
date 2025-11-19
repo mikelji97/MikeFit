@@ -37,7 +37,7 @@
                             <img src="{{ asset('storage/' . $class->image) }}" alt="Imagen de {{ $class->name }}"
                                 class="w-full h-48 object-cover" />
                         @else
-                            <div class="w-full h-48 bg-gradient-to-br from-blue-400 to-purple-500"></div>
+                            <div class="w-full h-48 bg-blue-50"></div>
                         @endif
 
                         {{-- Contenido --}}

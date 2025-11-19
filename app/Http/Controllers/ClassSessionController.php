@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ClassSession;
 use App\Models\ClassModel;
+use App\Models\Schedule;
 
 class ClassSessionController extends Controller
 {
@@ -14,21 +15,32 @@ class ClassSessionController extends Controller
         $classId = $request->get('class_id');
         $class = ClassModel::findOrFail($classId);
         $sessions = ClassSession::where('classes_id', $classId)->with('schedule')->get();
-        
-        return view('sessions.index', compact('class', 'sessions'));
+        $schedules = Schedule::all();
+
+        return view('sessions.index', compact('class', 'sessions', 'schedules',));
     }
 
-    public function create()
-    {
-        //
-    }
+    public function create() {}
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'classes_id' => 'required',
+            'schedules_id' => 'required',
+            'classroom' => 'required',
+        ]);
+
+        ClassSession::create([
+            'classes_id' => $request->classes_id,
+            'schedules_id' => $request->schedules_id,
+            'classroom' => $request->classroom,
+            'current_capacity' => 0,
+        ]);
+
+        return back()->with('success', '¡Sesión creada!');
     }
 
     /**
