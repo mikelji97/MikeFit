@@ -17,14 +17,14 @@
                 </span>
                 <a href="{{ route('classes.index') }}"
                     class="ml-auto bg-white text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-50 font-semibold">
-                <-- Volver
+                    ← Volver
                 </a>
             </div>
         </div>
 
         {{-- FORMULARIO PARA CREAR SESIÓN --}}
         <div class="bg-white rounded-xl shadow-md p-6 mb-6">
-            <h3 class="text-lg font-bold text-gray-800 mb-4"> Crear Nueva Sesión</h3>
+            <h3 class="text-lg font-bold text-gray-800 mb-4">Crear Nueva Sesión</h3>
 
             <form action="{{ route('sessions.store') }}" method="POST" class="flex flex-wrap gap-3 items-end">
                 @csrf
@@ -80,31 +80,42 @@
             @php
                 $dias = ['', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
             @endphp
-
             <div class="grid gap-4">
                 @foreach ($sessions as $session)
                     <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 border-l-4 border-blue-500">
-                        @if ($session->schedule)
-                            <p class="mb-2">
-                                <span class="text-gray-500">Horario:</span>
-                                <span
-                                    class="font-semibold">{{ $dias[$session->schedule->day_of_week] ?? $session->schedule->day_of_week }}</span>
-                                -
-                                {{ $session->schedule->start_time }} a {{ $session->schedule->finish_time }}
-                            </p>
-                        @endif
-                        <p class="mb-2">
-                            <span class="text-gray-500">Sala:</span>
-                            <span class="font-semibold">{{ $session->classroom }}</span>
-                        </p>
-                        <p class="mb-2">
-                            <span class="text-gray-500">Capacidad:</span>
-                            <span class="font-semibold">{{ $session->current_capacity }} /
-                                {{ $class->max_capacity }}</span>
-                        </p>
-                        <p class="text-sm text-gray-400">
-                            Creada: {{ $session->created_at->format('d/m/Y H:i') }}
-                        </p>
+                        <div class="flex justify-between items-start">
+                            <div>
+                                @if ($session->schedule)
+                                    <p class="mb-2">
+                                        <span class="text-gray-500">Horario:</span>
+                                        <span
+                                            class="font-semibold">{{ $dias[$session->schedule->day_of_week] ?? $session->schedule->day_of_week }}</span>
+                                        - {{ $session->schedule->start_time }} a {{ $session->schedule->finish_time }}
+                                    </p>
+                                @endif
+                                <p class="mb-2">
+                                    <span class="text-gray-500">Sala:</span>
+                                    <span class="font-semibold">{{ $session->classroom }}</span>
+                                </p>
+                                <p class="mb-2">
+                                    <span class="text-gray-500">Capacidad:</span>
+                                    <span class="font-semibold">{{ $session->current_capacity }} /
+                                        {{ $class->max_capacity }}</span>
+                                </p>
+                                <p class="text-sm text-gray-400">
+                                    Creada: {{ $session->created_at->format('d/m/Y H:i') }}
+                                </p>
+                            </div>
+                            <form action="{{ route('sessions.destroy', $session->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                    class="px-4 py-2.5 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+                                    onclick="return confirm('¿Estás seguro de eliminar esta sesión?')">
+                                    Eliminar
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 @endforeach
             </div>

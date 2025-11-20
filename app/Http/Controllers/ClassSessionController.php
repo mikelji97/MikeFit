@@ -40,7 +40,7 @@ class ClassSessionController extends Controller
             'current_capacity' => 0,
         ]);
 
-        return back()->with('success', '¡Sesión creada!');
+        return back()->with('success', 'Sesión creada');
     }
 
     /**
@@ -64,7 +64,7 @@ class ClassSessionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
     }
 
     /**
@@ -72,6 +72,8 @@ class ClassSessionController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $session = ClassSession::findOrFail($id);
+        $session->delete();
+        return back()->with('success', 'Sesión eliminada');
     }
 }
