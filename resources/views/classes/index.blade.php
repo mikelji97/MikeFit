@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+
 @section('contenido')
     <div class="max-w-[1200px] mx-auto px-6 py-8">
 
