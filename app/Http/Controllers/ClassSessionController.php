@@ -20,11 +20,6 @@ class ClassSessionController extends Controller
         return view('sessions.index', compact('class', 'sessions', 'schedules',));
     }
 
-    public function create() {}
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -43,33 +38,28 @@ class ClassSessionController extends Controller
         return back()->with('success', 'Sesión creada');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        //
+        $session = ClassSession::findOrFail($id);
+        $schedules = Schedule::all();
+
+        return view('sessions.edit', compact('session', 'schedules'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
+        $session = ClassSession::findOrFail($id);
 
+        $validated = $request->validate([
+            'schedules_id' => 'required|exists:schedules,id',
+            'classroom' => 'required|string'
+        ]);
+
+        $session->update($validated);
+
+        return redirect()->route('sessions.index', ['class_id' => $session->classes_id])
+            ->with('success', 'Sesión actualizada correctamente');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $session = ClassSession::findOrFail($id);
