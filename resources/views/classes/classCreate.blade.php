@@ -15,7 +15,7 @@
                     Nombre de la Clase:
                 </label>
                 <input type="text" id="name" name="name" value="{{ old('name') }}" placeholder="Ej: Yoga"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg "
                     required>
                 @error('name')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -28,7 +28,7 @@
                     Descripción:
                 </label>
                 <textarea id="description" name="description" rows="4" placeholder="Describe la clase..."
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 resize-none"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg "
                     maxlength="250"
                     required>{{ old('description') }}</textarea>
                     
@@ -43,7 +43,7 @@
                     Imagen de la Clase (opcional):
                 </label>
                 <input type="file" id="image" name="image" accept="image/*"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg">
                 <p class="text-gray-500 text-sm mt-1">Formatos: JPG, PNG, GIF (máx. 2MB)</p>
                 @error('image')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -59,7 +59,7 @@
                 </label>
                 <input type="number" id="duration" name="duration" value="{{ old('duration') }}" placeholder="60"
                     min="30" max="60"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     required>
                 @error('duration')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -71,7 +71,7 @@
                 </label>
                 <input type="number" id="max_capacity" name="max_capacity" value="{{ old('max_capacity') }}"
                     placeholder="30" min="1" max="100"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     required>
                 @error('max_capacity')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>

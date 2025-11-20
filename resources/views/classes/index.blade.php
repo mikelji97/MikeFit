@@ -13,7 +13,7 @@
                     <form class="flex gap-2" method="GET" action="{{ url()->current() }}">
                         <input type="text" name="q" value="{{ request('q') }}"
                             placeholder="Buscar clase..."
-                            class="px-4 py-2.5 border border-gray-300 rounded-lg min-w-[240px] focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                            class="px-4 py-2.5 border border-gray-300 rounded-lg min-w-[240px]">
                         <button type="submit"
                             class="px-5 py-2.5 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition">
                             Buscar

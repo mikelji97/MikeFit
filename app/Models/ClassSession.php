@@ -16,7 +16,7 @@ class ClassSession extends Model
         'current_capacity'
     ];
 
-    public function classModel(): BelongsTo
+    public function class(): BelongsTo
     {
         return $this->belongsTo(ClassModel::class, 'classes_id', 'id');
     }

@@ -75,8 +75,7 @@ class ClassController extends Controller
 
         return redirect()->route('classes.index')->with('success', 'Clase actualizada');
     }
-
-    
+        
     public function destroy(string $id) 
     {
         $class = ClassModel::findOrFail($id);

@@ -29,14 +29,12 @@
             <form action="{{ route('sessions.store') }}" method="POST" class="flex flex-wrap gap-3 items-end">
                 @csrf
                 <input type="hidden" name="classes_id" value="{{ $class->id }}">
-
-                {{-- Horario --}}
-                <div class="flex-1 min-w-[250px]">
+                <div class="flex-1">
                     <label for="schedules_id" class="block text-sm font-semibold text-gray-700 mb-1">
                         Horario
                     </label>
                     <select id="schedules_id" name="schedules_id" required
-                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg ">
                         <option value="">Selecciona un horario</option>
                         @php
                             $dias = ['', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
@@ -60,8 +58,7 @@
                         Sala
                     </label>
                     <input type="text" id="classroom" name="classroom" required placeholder="Ej: Sala A, Sala 1"
-                        value="{{ old('classroom') }}"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        value="{{ old('classroom') }}" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
                     @error('classroom')
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
@@ -84,6 +81,7 @@
                 @foreach ($sessions as $session)
                     <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 border-l-4 border-blue-500">
                         <div class="flex justify-between items-start">
+                            {{-- Izquierda: Info --}}
                             <div>
                                 @if ($session->schedule)
                                     <p class="mb-2">
@@ -106,15 +104,21 @@
                                     Creada: {{ $session->created_at->format('d/m/Y H:i') }}
                                 </p>
                             </div>
-                            <form action="{{ route('sessions.destroy', $session->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit"
-                                    class="px-4 py-2.5 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
-                                    onclick="return confirm('¿Estás seguro de eliminar esta sesión?')">
-                                    Eliminar
-                                </button>
-                            </form>
+                            <div class="flex flex-col gap-2">
+                                <form action="{{ route('sessions.destroy', $session->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="w-full px-4 py-2.5 bg-red-500 text-white rounded-lg hover:bg-red-600 transition font-semibold"
+                                        onclick="return confirm('¿Estás seguro de eliminar esta sesión?')">
+                                        Eliminar
+                                    </button>
+                                </form>
+                                <a href="{{ route('sessions.edit', $session->id) }}"
+                                    class="block text-center px-4 py-2.5 bg-green-500 text-white rounded-lg hover:bg-green-600 transition font-semibold">
+                                    Editar
+                                </a>
+                            </div>
                         </div>
                     </div>
                 @endforeach
