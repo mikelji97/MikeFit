@@ -11,8 +11,7 @@
 
                 <div class="flex gap-3 flex-wrap items-center">
                     <form class="flex gap-2" method="GET" action="{{ url()->current() }}">
-                        <input type="text" name="q" value="{{ request('q') }}"
-                            placeholder="Buscar clase..."
+                        <input type="text" name="q" value="{{ request('q') }}" placeholder="Buscar clase..."
                             class="px-4 py-2.5 border border-gray-300 rounded-lg min-w-[240px]">
                         <button type="submit"
                             class="px-5 py-2.5 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition">
@@ -20,8 +19,12 @@
                         </button>
                     </form>
                     <a href="{{ route('classes.create') }}"
-                        class="px-5 py-2.5 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600 transition">
+                        class="px-5 py-2.5 bg-gray-400 text-white rounded-lg font-semibold hover:bg-gray-600 transition">
                         + Nueva Clase
+                    </a>
+                    <a href="{{ route('schedules.create') }}"
+                        class="px-5 py-2.5 bg-gray-400 text-white rounded-lg font-semibold hover:bg-gray-600 transition">
+                        + Crear horario
                     </a>
                 </div>
             </div>
@@ -53,13 +56,14 @@
                             <div class="flex gap-2 flex-wrap mb-4">
                                 @if (isset($class->duration))
                                     <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold">
-                                            {{ $class->duration }} min
+                                        {{ $class->duration }} min
                                     </span>
                                 @endif
 
                                 @if (isset($class->max_capacity))
-                                    <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-semibold">
-                                            {{ $class->max_capacity }} pers
+                                    <span
+                                        class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-semibold">
+                                        {{ $class->max_capacity }} pers
                                     </span>
                                 @endif
                             </div>

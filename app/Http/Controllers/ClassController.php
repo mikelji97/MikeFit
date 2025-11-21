@@ -9,19 +9,17 @@ use Illuminate\Support\Facades\Storage;
 
 class ClassController extends Controller
 {
-    
+
     public function index(Request $request)
     {
         $query = ClassModel::query();
-
+        
         if ($request->filled('q')) {
             $search = $request->q;
 
             $query->where('name', 'LIKE', "%{$search}%");
         }
-
         $classes = $query->get();
-
         return view('classes.index', compact('classes'));
     }
 
@@ -44,23 +42,16 @@ class ClassController extends Controller
         }
 
         ClassModel::create($validated);
-
         return redirect()->route('classes.index')->with('success', 'Clase creada');
     }
 
-    public function show(string $class) 
-    {
-        //
-    }
-
-    
-    public function edit(string $id)  
+    public function edit(string $id)
     {
         $class = ClassModel::findOrFail($id);
         return view('classes.classEdit', compact('class'));
     }
 
-    public function update(Request $request, string $id)  
+    public function update(Request $request, string $id)
     {
         $class = ClassModel::findOrFail($id);
 
@@ -72,18 +63,16 @@ class ClassController extends Controller
         ]);
 
         $class->update($validated);
-
         return redirect()->route('classes.index')->with('success', 'Clase actualizada');
     }
-        
-    public function destroy(string $id) 
+
+    public function destroy(string $id)
     {
         $class = ClassModel::findOrFail($id);
 
         if ($class->image) {
             Storage::disk('public')->delete($class->image);
         }
-        
         $class->delete();
         return redirect()->route('classes.index')->with('success', 'Clase eliminada');
     }
