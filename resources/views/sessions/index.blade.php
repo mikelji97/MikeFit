@@ -17,7 +17,7 @@
                 </span>
                 <a href="{{ route('classes.index') }}"
                     class="ml-auto bg-white text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-50 font-semibold">
-                    ← Volver
+                    <-- Volver
                 </a>
             </div>
         </div>

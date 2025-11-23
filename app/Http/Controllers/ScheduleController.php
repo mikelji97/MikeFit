@@ -13,7 +13,18 @@ class ScheduleController extends Controller
 
     public function index()
     {
-        //
+        $schedules = Schedule::all();
+
+        $dias = [
+            1 => 'Lunes',
+            2 => 'Martes',
+            3 => 'Miercoles',
+            4 => 'Jueves',
+            5 => 'Viernes',
+            6 => 'Sabado',
+            7 => 'Domingo',
+        ];
+        return view('schedules.index', compact('schedules','dias'));
     }
 
     public function create()
@@ -30,8 +41,6 @@ class ScheduleController extends Controller
         ]);
         Schedule::create($validated);
         return redirect()->route('classes.index')->with('success', 'horario creado');
-
-    
     }
 
     public function show(string $id)
@@ -44,7 +53,7 @@ class ScheduleController extends Controller
         //
     }
 
-    
+
     public function update(Request $request, string $id)
     {
         //
@@ -52,6 +61,8 @@ class ScheduleController extends Controller
 
     public function destroy(string $id)
     {
-        //
+        $schedule = Schedule::findOrFail($id);
+        $schedule->delete();
+        return back()->with('success', 'Horario eliminado correctamente');
     }
 }
