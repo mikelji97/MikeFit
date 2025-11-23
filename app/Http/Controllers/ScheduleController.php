@@ -14,7 +14,17 @@ class ScheduleController extends Controller
     public function index()
     {
         $schedules = Schedule::all();
-        return view('schedules.index', compact('schedules'));
+
+        $dias = [
+            1 => 'Lunes',
+            2 => 'Martes',
+            3 => 'Miercoles',
+            4 => 'Jueves',
+            5 => 'Viernes',
+            6 => 'Sabado',
+            7 => 'Domingo',
+        ];
+        return view('schedules.index', compact('schedules','dias'));
     }
 
     public function create()

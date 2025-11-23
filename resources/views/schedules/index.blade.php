@@ -10,7 +10,7 @@
         @forelse($schedules as $schedule)
             <div class="bg-white shadow rounded p-4 mb-3">
                 <p class="font-semibold">
-                    {{ $schedule->day_of_week }}:
+                    {{ $dias[$schedule->day_of_week] }}:
                     {{ $schedule->start_time }} - {{ $schedule->finish_time }}
                 </p>
             </div>
