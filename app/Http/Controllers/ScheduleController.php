@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use App\Models\Schedule;
-
-
 class ScheduleController extends Controller
 {
 
@@ -50,7 +48,9 @@ class ScheduleController extends Controller
 
     public function edit(string $id)
     {
-        //
+        
+    $schedule = Schedule::findOrFail($id); 
+    return view('schedules.edit', compact('schedule'));
     }
 
 
