@@ -10,7 +10,7 @@ use App\Models\Schedule;
 class ScheduleController extends Controller
 {
 
-    public function index()
+    public function index()    //traigo todas los horarios y creo un array asociativo paraasociar cada numero a 1 dia de la semana para visualizar mejor.
     {
         $schedules = Schedule::all();
 
@@ -23,7 +23,7 @@ class ScheduleController extends Controller
             6 => 'Sabado',
             7 => 'Domingo',
         ];
-        return view('schedules.index', compact('schedules', 'dias'));
+        return view('schedules.index', compact('schedules', 'dias'));    //volvemos a la vista principal de schedules y traemos variables schedules y dias.
     }
 
     public function create()
