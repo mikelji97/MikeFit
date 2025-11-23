@@ -7,7 +7,6 @@ use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use App\Models\Schedule;
 
-
 class ScheduleController extends Controller
 {
 
@@ -24,7 +23,7 @@ class ScheduleController extends Controller
             6 => 'Sabado',
             7 => 'Domingo',
         ];
-        return view('schedules.index', compact('schedules','dias'));
+        return view('schedules.index', compact('schedules', 'dias'));
     }
 
     public function create()
@@ -50,13 +49,24 @@ class ScheduleController extends Controller
 
     public function edit(string $id)
     {
-        //
+        $schedule = Schedule::findOrFail($id);
+
+        return view('schedules.edit', compact('schedule'));
     }
 
 
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'start_time' => 'required|date_format:H:i',
+            'finish_time'   => 'required|date_format:H:i',
+            'day_of_week' => 'required|integer|between:1,7'
+        ]);
+
+        $schedule = Schedule::findOrFail($id);
+
+        $schedule->update($validated);
+        return redirect()->route('schedules.index')->with('success', 'horario atualizado');
     }
 
     public function destroy(string $id)
