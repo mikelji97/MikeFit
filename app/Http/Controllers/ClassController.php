@@ -28,7 +28,7 @@ class ClassController extends Controller
         return view('classes.classCreate');
     }
 
-    public function store(Request $request)
+    public function store(Request $request) //validar informacion del form para crear y guardar clase
     {
         $validated = $request->validate([
             'name' => 'required|max:255|unique:classes,name',
@@ -38,7 +38,7 @@ class ClassController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('classes', 'public');
+            $validated['image'] = $request->file('image')->store('classes', 'public'); //valida si habia imagen, l recoge y la guarda en la carpeta
         }
 
         ClassModel::create($validated);
@@ -47,7 +47,7 @@ class ClassController extends Controller
 
     public function edit(string $id)
     {
-        $class = ClassModel::findOrFail($id);
+        $class = ClassModel::findOrFail($id);  //buscamos en la base de datos si existe, si no, error
         return view('classes.classEdit', compact('class'));
     }
 
