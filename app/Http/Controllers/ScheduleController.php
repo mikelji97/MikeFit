@@ -49,7 +49,6 @@ class ScheduleController extends Controller
 
     public function edit(string $id)
     {
-
         $schedule = Schedule::findOrFail($id);
 
         return view('schedules.edit', compact('schedule'));
@@ -63,7 +62,10 @@ class ScheduleController extends Controller
             'finish_time'   => 'required|date_format:H:i',
             'day_of_week' => 'required|integer|between:1,7'
         ]);
-        Schedule::update($validated);
+
+        $schedule = Schedule::findOrFail($id);
+
+        $schedule->update($validated);
         return redirect()->route('schedules.index')->with('success', 'horario atualizado');
     }
 

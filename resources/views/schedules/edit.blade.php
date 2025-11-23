@@ -28,9 +28,14 @@
                     class="w-full border rounded p-2">
             </div>
 
-            <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded">
-                Guardar
-            </button>
+            <div class="flex gap-4 mt-8">
+                <a href="{{ route('schedules.index') }}" class="flex-1 bg-red-500 text-white py-2 rounded text-center">
+                    Cancelar
+                </a>
+                <button type="submit" class="flex-1 bg-blue-600 text-white py-2 rounded">
+                    Guardar
+                </button>
+            </div>
         </form>
     </div>
 @endsection
