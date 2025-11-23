@@ -22,9 +22,9 @@
                         class="px-5 py-2.5 bg-gray-400 text-white rounded-lg font-semibold hover:bg-gray-600 transition">
                         + Nueva Clase
                     </a>
-                    <a href="{{ route('schedules.create') }}"
+                    <a href="{{ route('schedules.index') }}"
                         class="px-5 py-2.5 bg-gray-400 text-white rounded-lg font-semibold hover:bg-gray-600 transition">
-                        + Crear horario
+                        Ver horarios
                     </a>
                 </div>
             </div>

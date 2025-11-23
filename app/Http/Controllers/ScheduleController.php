@@ -13,7 +13,8 @@ class ScheduleController extends Controller
 
     public function index()
     {
-        //
+        $schedules = Schedule::all();
+        return view('schedules.index', compact('schedules'));
     }
 
     public function create()
@@ -30,8 +31,6 @@ class ScheduleController extends Controller
         ]);
         Schedule::create($validated);
         return redirect()->route('classes.index')->with('success', 'horario creado');
-
-    
     }
 
     public function show(string $id)
@@ -44,7 +43,7 @@ class ScheduleController extends Controller
         //
     }
 
-    
+
     public function update(Request $request, string $id)
     {
         //
