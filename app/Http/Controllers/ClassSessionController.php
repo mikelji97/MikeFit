@@ -39,27 +39,27 @@ class ClassSessionController extends Controller
     }
 
     public function edit(string $id)
-    {
-        $session = ClassSession::findOrFail($id);
-        $schedules = Schedule::all();
+{
+    $session = ClassSession::findOrFail($id);
+    $schedules = Schedule::all();
 
-        return view('sessions.edit', compact('session', 'schedules'));
-    }
+    return view('sessions.edit', compact('session', 'schedules'));
+}
 
-    public function update(Request $request, string $id)
-    {
-        $session = ClassSession::findOrFail($id);
+public function update(Request $request, string $id)
+{
+    $session = ClassSession::findOrFail($id);
 
-        $validated = $request->validate([
-            'schedules_id' => 'required|exists:schedules,id',
-            'classroom' => 'required|string'
-        ]);
-
-        $session->update($validated);
-
-        return redirect()->route('sessions.index', ['class_id' => $session->classes_id])
-            ->with('success', 'Sesión actualizada correctamente');
-    }
+    $validated = $request->validate([
+        'schedules_id' => 'required|exists:schedules,id',
+        'classroom' => 'required|string'
+    ]);
+    
+    $session->update($validated);
+    
+    return redirect()->route('sessions.index', ['class_id' => $session->classes_id])
+        ->with('success', 'Sesión actualizada correctamente');
+}
     public function destroy(string $id)
     {
         $session = ClassSession::findOrFail($id);
