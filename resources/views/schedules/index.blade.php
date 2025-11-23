@@ -8,11 +8,20 @@
         </div>
 
         @forelse($schedules as $schedule)
-            <div class="bg-white shadow rounded p-4 mb-3">
+            <div class="bg-white shadow rounded p-4 mb-3 flex justify-between items-center">
                 <p class="font-semibold">
                     {{ $dias[$schedule->day_of_week] }}:
                     {{ $schedule->start_time }} - {{ $schedule->finish_time }}
                 </p>
+                <form action="{{ route('schedules.destroy', $schedule->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit"
+                        class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition font-semibold"
+                        onclick="return confirm('¿Estás seguro de eliminar este horario?')">
+                        Eliminar
+                    </button>
+                </form>
             </div>
         @empty
             <p>No hay horarios aún.</p>
